@@ -9,6 +9,9 @@ Write-Host "current directory $BuildOut"
 cmake .. -A Win32 -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build .
 
+Write-Host "start running..."
+Write-Host "#############################################################################"
+
 ./Debug/TemplateProject.exe
 
 Pop-Location

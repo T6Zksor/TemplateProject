@@ -2,6 +2,7 @@
     "name": "template-application",
     "version-string": "0.1.0",
     "dependencies": [
-        "zlib"
+        { "name": "zlib", "platform": "x64" },
+        { "name": "libuv" }
     ]
 }

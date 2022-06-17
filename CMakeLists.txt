@@ -26,3 +26,8 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY
 
 find_package(ZLIB REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE ZLIB::ZLIB)
+
+find_package(unofficial-libuv CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE unofficial::libuv::libuv)
+
+################################################################################

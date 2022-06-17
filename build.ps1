@@ -6,7 +6,8 @@ if (!(Test-Path -Path $BuildOut)) {
 Push-Location -Path $BuildOut
 Write-Host "current directory $BuildOut"
 
-cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE="$PSScriptRoot/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows-static
+#-DVCPKG_TARGET_TRIPLET=x64-windows-static
+cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE="$PSScriptRoot/vcpkg/scripts/buildsystems/vcpkg.cmake"
 cmake --build .
 
 if ($LastExitCode -eq 0) {

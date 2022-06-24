@@ -2,6 +2,8 @@
 
 cmake_minimum_required(VERSION 3.15)
 
+set(CMAKE_SYSTEM_VERSION 8.1)
+
 project(TemplateProject)
 
 ################################################################################

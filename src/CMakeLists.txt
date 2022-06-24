@@ -44,3 +44,9 @@ find_package(Qt5 REQUIRED COMPONENTS Widgets)
 target_link_libraries(${PROJ_TARGET_NAME} PRIVATE Qt5::Widgets Qt5::Gui Qt5::Core)
 
 ################################################################################
+
+set_target_properties(${PROJ_TARGET_NAME} 
+        PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=%PATH%;$<TARGET_FILE_DIR:Qt5::Core>;"
+    )
+
+################################################################################

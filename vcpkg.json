@@ -3,6 +3,7 @@
     "version-string": "0.1.0",
     "dependencies": [
         { "name": "zlib", "platform": "x64" },
-        { "name": "libuv" }
+        { "name": "libuv" },
+        { "name": "poco" }
     ]
 }

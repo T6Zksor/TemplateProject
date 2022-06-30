@@ -19,7 +19,6 @@ set(sources
     main.cc
     mainwindow.h
     mainwindow.cc
-    mainwindow.ui
     resources.qrc
 )
 
@@ -42,6 +41,10 @@ target_link_libraries(${PROJ_TARGET_NAME} PRIVATE unofficial::libuv::libuv)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 target_link_libraries(${PROJ_TARGET_NAME} PRIVATE Qt5::Widgets Qt5::Gui Qt5::Core)
+
+target_compile_definitions(${PROJ_TARGET_NAME} PRIVATE POCO_DLL)
+find_package(Poco REQUIRED COMPONENTS Foundation)
+target_link_libraries(${PROJ_TARGET_NAME} PRIVATE Poco::Foundation)
 
 ################################################################################
 

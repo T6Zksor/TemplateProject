@@ -1,38 +1,79 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include "Poco/AutoPtr.h"
-#include "Poco/Logger.h"
-#include "Poco/SimpleFileChannel.h"
-#include "Poco/FormattingChannel.h"
-#include "Poco/PatternFormatter.h"
-#include "Poco/FileChannel.h"
+#include <QTimer>
+#include <memory>
 
-using Poco::Logger;
-using Poco::AutoPtr;
-using Poco::SimpleFileChannel;
-using Poco::FormattingChannel;
+#include "Poco/ActiveDispatcher.h"
+#include "Poco/ActiveMethod.h"
+#include "Poco/FunctionDelegate.h"
+
+struct AsyncParam {
+    std::function<void()> request;
+    std::function<void()> response;
+};
+
+class MainExecutor {
+   public:
+    void exec(AsyncParam param) {
+        // any thread
+        QTimer* timer = new QTimer();
+        timer->moveToThread(qApp->thread());
+        timer->setSingleShot(true);
+        QObject::connect(timer, &QTimer::timeout, [=]() {
+            // main thread
+            Sleep(500);
+            std::cout << "wow";
+            timer->deleteLater();
+        });
+        QMetaObject::invokeMethod(timer, "start", Qt::QueuedConnection, Q_ARG(int, 0));
+
+        // https://stackoverflow.com/questions/21646467/how-to-execute-a-functor-or-a-lambda-in-a-given-thread-in-qt-gcd-style
+        QMetaObject::invokeMethod(qApp, []() {
+            Sleep(500);
+            std::cout << "wow";
+        });
+    }
+};
+
+class AsyncExecutor : public std::enable_shared_from_this<AsyncExecutor> {
+   private:
+    AsyncExecutor() : exec(this, &AsyncExecutor::execImpl) {}
+
+   public:
+    ~AsyncExecutor() {}
+    static std::shared_ptr<AsyncExecutor> create() {
+        return std::shared_ptr<AsyncExecutor>(new AsyncExecutor());
+    }
+
+    Poco::ActiveMethod<void, AsyncParam, AsyncExecutor> exec;
+
+   private:
+    void execImpl(const AsyncParam& p) {
+        Sleep(500);
+        std::cout << "wow";
+        std::cout << m_val;
+
+        MainExecutor e;
+        e.exec({});
+    }
+
+    int m_val = 42;
+};
+
+void foo() {
+    AsyncParam p;
+
+    auto ae = AsyncExecutor::create();
+    ae->exec(p);
+}
 
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
 
-    AutoPtr<SimpleFileChannel> p = new SimpleFileChannel();
-    p->setProperty("path", "simple.log");
-    p->setProperty("flush", "false");
-    p->setProperty("rotation", "1 M");
-
-    AutoPtr<FormattingChannel> pfc = new FormattingChannel();
-    pfc->setFormatter(new Poco::PatternFormatter("%L %Z %z %Y-%m-%d %H:%M:%S.%c %N[%P]:%s:%q:%t"));
-    pfc->setChannel(p);
-
-    Logger::root().setChannel(pfc);
-    auto& l = Logger::get("tlogger");
-    for (;;) {
-        l.warning("wowwowwow");
-        l.setLevel("none");
-    }
+    foo();
 
     return a.exec();
 }

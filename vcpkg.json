@@ -4,6 +4,7 @@
     "dependencies": [
         { "name": "zlib", "platform": "x64" },
         { "name": "libuv" },
-        { "name": "poco" }
+        { "name": "poco" },
+        { "name": "fmt" }
     ]
 }

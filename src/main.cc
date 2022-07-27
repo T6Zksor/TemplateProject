@@ -3,10 +3,15 @@
 #include <QApplication>
 #include <QTimer>
 #include <memory>
+#include <concepts>
+#include <string>
+//#include <ranges>
 
 #include "Poco/ActiveDispatcher.h"
 #include "Poco/ActiveMethod.h"
 #include "Poco/FunctionDelegate.h"
+
+#include "fmt/format.h"
 
 struct AsyncParam {
     std::function<void()> request;
@@ -61,6 +66,18 @@ class AsyncExecutor : public std::enable_shared_from_this<AsyncExecutor> {
     int m_val = 42;
 };
 
+template<typename T>
+concept Hashable = requires(T a)
+{
+	{ std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
+};
+
+struct meow {};
+
+// Constrained C++20 function template:
+template<Hashable T>
+void f(T) {}
+
 void foo() {
     AsyncParam p;
 
@@ -73,7 +90,10 @@ int main(int argc, char* argv[]) {
     MainWindow w;
     w.show();
 
-    foo();
+    //auto result = fmt::format(FMT_STRING("test wrong string {}"), "wow");
+	//using std::operator""s;
+	//f("abc"s);
+    f(meow{});
 
     return a.exec();
 }

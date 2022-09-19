@@ -8,7 +8,8 @@ Write-Host "current directory $BuildOut"
 
 #-DVCPKG_TARGET_TRIPLET=x64-windows-static
 #-DCMAKE_PREFIX_PATH="path/to/Qt5/lib/cmake"
-cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_PREFIX_PATH="D:\\Qt\\5.15.2\\msvc2019_64\\lib\\cmake" -DCMAKE_TOOLCHAIN_FILE="$PSScriptRoot/vcpkg/scripts/buildsystems/vcpkg.cmake"
+#-DCMAKE_TOOLCHAIN_FILE="$PSScriptRoot/vcpkg/scripts/buildsystems/vcpkg.cmake"
+cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_PREFIX_PATH="D:\\Qt\\5.15.2\\msvc2019_64\\lib\\cmake"
 cmake --build .
 
 if ($LastExitCode -eq 0) {

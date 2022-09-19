@@ -29,22 +29,22 @@ add_executable(${PROJ_TARGET_NAME} WIN32 ${sources})
 target_compile_features(${PROJ_TARGET_NAME} PRIVATE cxx_std_17)
 
 set_property(TARGET ${PROJ_TARGET_NAME} PROPERTY
-             MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
 ################################################################################
 
-find_package(ZLIB REQUIRED)
-target_link_libraries(${PROJ_TARGET_NAME} PRIVATE ZLIB::ZLIB)
+#find_package(ZLIB REQUIRED)
+#target_link_libraries(${PROJ_TARGET_NAME} PRIVATE ZLIB::ZLIB)
 
-find_package(unofficial-libuv CONFIG REQUIRED)
-target_link_libraries(${PROJ_TARGET_NAME} PRIVATE unofficial::libuv::libuv)
+#find_package(unofficial-libuv CONFIG REQUIRED)
+#target_link_libraries(${PROJ_TARGET_NAME} PRIVATE unofficial::libuv::libuv)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 target_link_libraries(${PROJ_TARGET_NAME} PRIVATE Qt5::Widgets Qt5::Gui Qt5::Core)
 
-target_compile_definitions(${PROJ_TARGET_NAME} PRIVATE POCO_DLL)
-find_package(Poco REQUIRED COMPONENTS Foundation)
-target_link_libraries(${PROJ_TARGET_NAME} PRIVATE Poco::Foundation)
+#target_compile_definitions(${PROJ_TARGET_NAME} PRIVATE POCO_DLL)
+#find_package(Poco REQUIRED COMPONENTS Foundation)
+#target_link_libraries(${PROJ_TARGET_NAME} PRIVATE Poco::Foundation)
 
 ################################################################################
 

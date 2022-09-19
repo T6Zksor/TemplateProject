@@ -22,7 +22,7 @@ set(sources
     resources.qrc
 )
 
-add_executable(${PROJ_TARGET_NAME} ${sources})
+add_executable(${PROJ_TARGET_NAME} WIN32 ${sources})
 
 ################################################################################
 

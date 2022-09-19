@@ -14,6 +14,16 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
+class MyFrame : public QWidget {
+    Q_OBJECT
+
+   public:
+       MyFrame(QWidget* parent = nullptr);
+
+       QSize sizeHint() const override;
+
+};
+
 namespace Ui {
 class MainWindow;
 }
@@ -27,17 +37,6 @@ class MainWindow : public QWidget {
 
    private:
     void setupUi();
-
-   private:
-    QAction* actionPrintImage;
-    QVBoxLayout* verticalLayout;
-    QScrollArea* scrollArea;
-    QLabel* labelView;
-    QHBoxLayout* horizontalLayout;
-    QSpacerItem* horizontalSpacer;
-    QSlider* sliderScale;
-    QToolButton* buttonOriginalSize;
-    QToolButton* buttonFitToWindow;
 };
 
 #endif  // MAINWINDOW_H
